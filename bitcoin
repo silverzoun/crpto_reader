@@ -1,0 +1,31 @@
+import requests
+
+def get_bitcoin_price():
+    """
+    This function retrieves the current price of Bitcoin from an API.
+    
+    Returns:
+    float: The current price of Bitcoin
+    """
+    try:
+        # Make a GET request to the API
+        response = requests.get("https://api.coindesk.com/v1/bpi/currentprice/BTC.json")
+        
+        # Check if the request was successful
+        if response.status_code == 200:
+            # Parse the JSON response
+            data = response.json()
+            
+            # Extract the Bitcoin price from the response
+            price = data["bpi"]["USD"]["rate_float"]
+            
+            # Return the Bitcoin price
+            return price
+        else:
+            # Log the error
+            print(f"Error: Failed to retrieve Bitcoin price. Status code: {response.status_code}")
+            return None
+    except Exception as e:
+        # Log the error
+        print(f"Error: {e}")
+        return None
